@@ -1,0 +1,1486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SubIntel — Presentation Guide | Team 7</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Playfair+Display:wght@700&display=swap');
+
+  :root {
+    --navy:    #0D1B3E;
+    --teal:    #0A7E8C;
+    --mint:    #02C39A;
+    --white:   #FFFFFF;
+    --offwhite:#F0F6FF;
+    --gray:    #64748B;
+    --light:   #CBD5E1;
+    --card:    #FFFFFF;
+    --red:     #DC2626;
+    --amber:   #D97706;
+    --green:   #059669;
+    --purple:  #7C3AED;
+    --blue:    #0891B2;
+    --text:    #1E293B;
+    --bg:      #F0F6FF;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Space Grotesk', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--navy);
+    color: var(--white);
+    padding: 60px 40px 50px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 6px;
+    background: linear-gradient(to bottom, var(--mint), var(--teal));
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    right: -80px; top: -80px;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(2,195,154,0.12) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.6rem;
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+  .hero h1 span { color: var(--mint); }
+  .hero p { color: var(--light); font-size: 1.05rem; margin-bottom: 24px; }
+  .hero-chips { display: flex; flex-wrap: wrap; gap: 10px; }
+  .chip {
+    background: rgba(2,195,154,0.15);
+    border: 1px solid rgba(2,195,154,0.4);
+    color: var(--mint);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* ── NAV ── */
+  .nav {
+    background: var(--navy);
+    border-top: 1px solid rgba(255,255,255,0.08);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav a {
+    color: var(--light);
+    text-decoration: none;
+    padding: 14px 20px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    white-space: nowrap;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+    letter-spacing: 0.03em;
+  }
+  .nav a:hover { color: var(--mint); border-bottom-color: var(--mint); }
+
+  /* ── MAIN LAYOUT ── */
+  .main { max-width: 1100px; margin: 0 auto; padding: 40px 24px 80px; }
+
+  /* ── SECTION ── */
+  .section { margin-bottom: 56px; }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  .section-num {
+    background: var(--navy);
+    color: var(--mint);
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.9rem;
+    font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+    flex-shrink: 0;
+  }
+  .section-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--navy);
+  }
+  .section-sub {
+    font-size: 0.85rem;
+    color: var(--teal);
+    font-weight: 600;
+    margin-top: 2px;
+  }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    border: 1px solid #E2EAF4;
+    margin-bottom: 16px;
+  }
+  .card-accent {
+    border-left: 4px solid var(--teal);
+  }
+  .card h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 10px;
+  }
+  .card h4 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--teal);
+    margin: 14px 0 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .card p { font-size: 0.93rem; color: var(--text); margin-bottom: 8px; }
+
+  /* ── STEP CARDS ── */
+  .step-grid { display: grid; gap: 14px; }
+  .step-card {
+    background: var(--card);
+    border-radius: 12px;
+    border: 1px solid #E2EAF4;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 56px 1fr;
+  }
+  .step-num {
+    background: var(--navy);
+    color: var(--mint);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem;
+    font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .step-body { padding: 16px 20px; }
+  .step-body h3 { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+  .step-body p { font-size: 0.88rem; color: var(--gray); }
+  .step-body .tag {
+    display: inline-block;
+    background: var(--offwhite);
+    color: var(--teal);
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* ── FR PIPELINE ── */
+  .pipeline {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .fr-box {
+    background: var(--card);
+    border: 1px solid #E2EAF4;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+  .fr-header {
+    padding: 8px 14px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: white;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.05em;
+  }
+  .fr-body { padding: 10px 14px; }
+  .fr-body strong { font-size: 0.9rem; color: var(--navy); display: block; margin-bottom: 4px; }
+  .fr-body span { font-size: 0.8rem; color: var(--gray); }
+  .fr-body .simple { font-size: 0.82rem; color: var(--text); background: var(--offwhite); padding: 6px 8px; border-radius: 6px; margin-top: 8px; }
+
+  /* ── Q&A ── */
+  .qa-section { margin-bottom: 32px; }
+  .qa-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .qa-label-badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .qa-item {
+    background: var(--card);
+    border: 1px solid #E2EAF4;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.04);
+    transition: box-shadow 0.2s;
+  }
+  .qa-item:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
+  .qa-q {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 18px;
+    user-select: none;
+  }
+  .qa-q-icon {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.72rem;
+    font-weight: 800;
+    flex-shrink: 0;
+    margin-top: 1px;
+    color: white;
+  }
+  .qa-q-text { font-size: 0.93rem; font-weight: 600; color: var(--navy); flex: 1; }
+  .qa-toggle { color: var(--light); font-size: 1rem; flex-shrink: 0; transition: transform 0.25s; }
+  .qa-a {
+    display: none;
+    padding: 0 18px 16px 56px;
+    font-size: 0.88rem;
+    color: var(--text);
+    line-height: 1.7;
+    border-top: 1px solid var(--offwhite);
+  }
+  .qa-a.open { display: block; }
+  .qa-toggle.open { transform: rotate(180deg); }
+  .qa-a strong { color: var(--navy); }
+  .qa-a code {
+    background: #EEF2FF;
+    color: var(--purple);
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.83em;
+  }
+  .qa-a ul { margin: 8px 0 8px 16px; }
+  .qa-a ul li { margin-bottom: 4px; }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight {
+    background: linear-gradient(135deg, #EBF5F8, #E0F5EE);
+    border: 1px solid rgba(2,195,154,0.3);
+    border-left: 4px solid var(--mint);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin: 16px 0;
+    font-size: 0.9rem;
+  }
+  .highlight strong { color: var(--navy); }
+
+  /* ── PPT GUIDE ── */
+  .ppt-slide {
+    background: var(--card);
+    border: 1px solid #E2EAF4;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    display: grid;
+    grid-template-columns: 80px 1fr;
+  }
+  .ppt-slide-num {
+    background: var(--navy);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 8px;
+    gap: 4px;
+  }
+  .ppt-slide-num span:first-child {
+    color: var(--light);
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .ppt-slide-num span:last-child {
+    color: var(--mint);
+    font-size: 1.5rem;
+    font-weight: 800;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .ppt-slide-body { padding: 16px 20px; }
+  .ppt-slide-body h3 { font-size: 0.97rem; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+  .ppt-slide-body .say { font-size: 0.85rem; color: var(--gray); margin-bottom: 8px; }
+  .ppt-slide-body .say em { color: var(--teal); font-style: normal; font-weight: 600; }
+  .ppt-slide-body .tips { font-size: 0.82rem; color: var(--purple); font-weight: 600; }
+
+  /* ── STAT ROW ── */
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    margin: 16px 0;
+  }
+  .stat-box {
+    background: var(--navy);
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+  }
+  .stat-box .val { font-size: 1.6rem; font-weight: 800; color: var(--mint); font-family: 'JetBrains Mono', monospace; }
+  .stat-box .lbl { font-size: 0.75rem; color: var(--light); margin-top: 4px; }
+
+  /* ── TIPS BOX ── */
+  .tips-box {
+    background: #FFF7ED;
+    border: 1px solid #FED7AA;
+    border-left: 4px solid var(--amber);
+    border-radius: 10px;
+    padding: 14px 18px;
+    font-size: 0.88rem;
+    margin: 12px 0;
+  }
+  .tips-box strong { color: #92400E; }
+
+  /* ── CODE SNIPPET ── */
+  .code-block {
+    background: var(--navy);
+    border-radius: 8px;
+    padding: 14px 18px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+    color: var(--mint);
+    margin: 10px 0;
+    overflow-x: auto;
+    line-height: 1.6;
+  }
+  .code-block .comment { color: #4A6580; }
+
+  /* ── ACCORDION TOGGLE LOGIC ── */
+  .collapsible { cursor: pointer; }
+
+  /* ── BADGE ── */
+  .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.73rem;
+    font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+  .badge-teal { background: rgba(10,126,140,0.12); color: var(--teal); }
+  .badge-red { background: rgba(220,38,38,0.1); color: var(--red); }
+  .badge-amber { background: rgba(217,119,6,0.12); color: var(--amber); }
+  .badge-green { background: rgba(5,150,105,0.1); color: var(--green); }
+  .badge-purple { background: rgba(124,58,237,0.1); color: var(--purple); }
+
+  /* ── DIVIDER ── */
+  hr.section-divider {
+    border: none;
+    height: 1px;
+    background: linear-gradient(to right, var(--mint), transparent);
+    margin: 48px 0 32px;
+  }
+
+  /* ── TOC ── */
+  .toc {
+    background: var(--card);
+    border: 1px solid #E2EAF4;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 40px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  }
+  .toc h2 { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+  .toc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 8px; }
+  .toc a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    background: var(--offwhite);
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--text);
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.2s;
+    border: 1px solid transparent;
+  }
+  .toc a:hover { background: rgba(2,195,154,0.1); border-color: var(--mint); color: var(--navy); }
+  .toc a .toc-num { color: var(--teal); font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; }
+
+  @media (max-width: 600px) {
+    .hero h1 { font-size: 1.8rem; }
+    .ppt-slide { grid-template-columns: 56px 1fr; }
+    .step-card { grid-template-columns: 44px 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>SubIntel <span>Presentation Guide</span></h1>
+  <p>Your complete plain-language explanation + Q&A prep + PPT walkthrough — Team 7 | Mansi & Samyak</p>
+  <div class="hero-chips">
+    <span class="chip">137,806 Transactions</span>
+    <span class="chip">NLP 99.81%</span>
+    <span class="chip">9/9 BRD FRs</span>
+    <span class="chip">FR1 → FR9</span>
+    <span class="chip">ARIMA · GBM · spaCy</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="#project">🧠 Project Explained</a>
+  <a href="#pipeline">⚙️ Pipeline & Code</a>
+  <a href="#dashboard">🖥️ Dashboard</a>
+  <a href="#qa">❓ Q&A Prep</a>
+  <a href="#ppt">📊 PPT Guide</a>
+  <a href="#quickref">⚡ Quick Reference</a>
+</nav>
+
+<div class="main">
+
+  <!-- TOC -->
+  <div class="toc">
+    <h2>📋 What's in this guide</h2>
+    <div class="toc-grid">
+      <a href="#project"><span class="toc-num">01</span> What is this project?</a>
+      <a href="#pipeline"><span class="toc-num">02</span> Pipeline explained simply</a>
+      <a href="#dashboard"><span class="toc-num">03</span> Dashboard walkthrough</a>
+      <a href="#qa"><span class="toc-num">04</span> All possible Q&A</a>
+      <a href="#ppt"><span class="toc-num">05</span> How to present the PPT</a>
+      <a href="#quickref"><span class="toc-num">06</span> Quick cheat sheet</a>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SECTION 1 — PROJECT EXPLAINED
+  ═══════════════════════════════════════════════════════ -->
+  <div class="section" id="project">
+    <div class="section-header">
+      <div class="section-num">01</div>
+      <div>
+        <div class="section-title">What Is This Project?</div>
+        <div class="section-sub">Explain it simply to anyone — technical or non-technical</div>
+      </div>
+    </div>
+
+    <div class="card card-accent">
+      <h3>🎯 The One-Line Explanation</h3>
+      <p>We built an AI-powered banking assistant that automatically finds all your subscriptions (like Netflix, Spotify, gym), predicts when the next payment will be taken, tells you if you're at risk of a payment failing, and generates a smart alert so you can act before money runs out.</p>
+    </div>
+
+    <div class="card">
+      <h3>🏦 The Real-World Problem (say this to anyone)</h3>
+      <p>Imagine you have a bank account. You have subscriptions to Netflix, Spotify, a gym, electricity bill — maybe 5 to 10 recurring payments. The problem is:</p>
+      <ul style="margin: 10px 0 0 18px; font-size: 0.9rem; color: var(--text);">
+        <li>You forget which subscriptions are active</li>
+        <li>You don't know when the next payment will be deducted</li>
+        <li>Sometimes your balance is low and the auto-debit fails — the bank charges a penalty</li>
+        <li>Nobody warns you in advance</li>
+      </ul>
+      <p style="margin-top: 10px;"><strong>Our system solves all four problems automatically using AI.</strong></p>
+    </div>
+
+    <div class="card">
+      <h3>🔢 What we did in simple steps</h3>
+      <div style="display: grid; gap: 10px; margin-top: 10px;">
+        <div style="display: flex; gap: 12px; align-items: flex-start;">
+          <span style="background: var(--navy); color: var(--mint); padding: 2px 9px; border-radius: 6px; font-size: 0.8rem; font-weight: 700; flex-shrink: 0; margin-top: 2px;">Step 1</span>
+          <p style="font-size: 0.9rem;"><strong>We created fake bank data</strong> — 137,806 transactions for 1,200 imaginary Indian customers using a tool called Faker. It generated realistic names, amounts, merchants, and dates.</p>
+        </div>
+        <div style="display: flex; gap: 12px; align-items: flex-start;">
+          <span style="background: var(--teal); color: white; padding: 2px 9px; border-radius: 6px; font-size: 0.8rem; font-weight: 700; flex-shrink: 0; margin-top: 2px;">Step 2</span>
+          <p style="font-size: 0.9rem;"><strong>We taught the AI to read transaction descriptions</strong> — "NETFLIX.COM MONTHLY SUB" → yes, this is a subscription. "ATM CASH WITHDRAWAL" → no, this is not. This is the NLP (Natural Language Processing) part.</p>
+        </div>
+        <div style="display: flex; gap: 12px; align-items: flex-start;">
+          <span style="background: var(--purple); color: white; padding: 2px 9px; border-radius: 6px; font-size: 0.8rem; font-weight: 700; flex-shrink: 0; margin-top: 2px;">Step 3</span>
+          <p style="font-size: 0.9rem;"><strong>We found recurring patterns</strong> — if Netflix deducted money on the 14th of every month for 3+ months, that's a confirmed pattern.</p>
+        </div>
+        <div style="display: flex; gap: 12px; align-items: flex-start;">
+          <span style="background: var(--mint); color: var(--navy); padding: 2px 9px; border-radius: 6px; font-size: 0.8rem; font-weight: 700; flex-shrink: 0; margin-top: 2px;">Step 4</span>
+          <p style="font-size: 0.9rem;"><strong>We predicted the next payment</strong> — using ARIMA (a time series model) and Linear Regression, we predict when and how much the next debit will be.</p>
+        </div>
+        <div style="display: flex; gap: 12px; align-items: flex-start;">
+          <span style="background: var(--amber); color: white; padding: 2px 9px; border-radius: 6px; font-size: 0.8rem; font-weight: 700; flex-shrink: 0; margin-top: 2px;">Step 5</span>
+          <p style="font-size: 0.9rem;"><strong>We scored the risk</strong> — if your balance is low and the payment is large, that's High Risk. We used Gradient Boosting (a machine learning model) for this.</p>
+        </div>
+        <div style="display: flex; gap: 12px; align-items: flex-start;">
+          <span style="background: var(--red); color: white; padding: 2px 9px; border-radius: 6px; font-size: 0.8rem; font-weight: 700; flex-shrink: 0; margin-top: 2px;">Step 6</span>
+          <p style="font-size: 0.9rem;"><strong>We generated alerts</strong> — "Upcoming Debit: Amazon ₹499. Risk: Medium. Suggestion: Top up ₹300 before 3 days." These are our GenAI-style alerts.</p>
+        </div>
+        <div style="display: flex; gap: 12px; align-items: flex-start;">
+          <span style="background: var(--blue); color: white; padding: 2px 9px; border-radius: 6px; font-size: 0.8rem; font-weight: 700; flex-shrink: 0; margin-top: 2px;">Step 7</span>
+          <p style="font-size: 0.9rem;"><strong>We built a dashboard</strong> — a web app using Streamlit where a bank employee can log in and see all this information in charts, tables, and cards.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-box"><div class="val">137,806</div><div class="lbl">Transactions Generated</div></div>
+      <div class="stat-box"><div class="val">1,200</div><div class="lbl">Customers</div></div>
+      <div class="stat-box"><div class="val">75,428</div><div class="lbl">Subscriptions Found</div></div>
+      <div class="stat-box"><div class="val">99.81%</div><div class="lbl">NLP Accuracy</div></div>
+      <div class="stat-box"><div class="val">3,068</div><div class="lbl">Predictions Made</div></div>
+      <div class="stat-box"><div class="val">1,200</div><div class="lbl">Alerts Generated</div></div>
+      <div class="stat-box"><div class="val">259</div><div class="lbl">High-Risk Customers</div></div>
+      <div class="stat-box"><div class="val">126s</div><div class="lbl">Full Runtime</div></div>
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- ═══════════════════════════════════════════════════════
+       SECTION 2 — PIPELINE & CODE
+  ═══════════════════════════════════════════════════════ -->
+  <div class="section" id="pipeline">
+    <div class="section-header">
+      <div class="section-num">02</div>
+      <div>
+        <div class="section-title">Pipeline & Code — Explained Simply</div>
+        <div class="section-sub">Each FR module in plain English + what the code actually does</div>
+      </div>
+    </div>
+
+    <div class="pipeline">
+
+      <div class="fr-box">
+        <div class="fr-header" style="background: var(--navy);">FR1 · fr1_dataset_generator.py</div>
+        <div class="fr-body">
+          <strong>Synthetic Data Generator</strong>
+          <span>Creates fake bank data</span>
+          <div class="simple">Think of it as a "fake customer machine." We use Python's <strong>Faker</strong> library (Indian locale) to generate 1,200 customers with Indian names, 19 types of subscriptions (Netflix ₹649, Spotify ₹119…), and 137,806 total transactions over 18 months (Jan 2023 – Jun 2024).</div>
+        </div>
+      </div>
+
+      <div class="fr-box">
+        <div class="fr-header" style="background: #1E3A5F;">FR2 · fr2_data_cleaning.py</div>
+        <div class="fr-body">
+          <strong>Data Cleaning</strong>
+          <span>Makes messy data usable</span>
+          <div class="simple">Converts text to lowercase, removes special characters, fills in missing values (null balance → 0), removes duplicate rows. Output: <code>transactions_cleaned.csv</code></div>
+        </div>
+      </div>
+
+      <div class="fr-box">
+        <div class="fr-header" style="background: var(--teal);">FR3 · fr3_nlp_detector.py</div>
+        <div class="fr-body">
+          <strong>NLP Subscription Detection</strong>
+          <span>The AI reading the descriptions</span>
+          <div class="simple"><strong>How it works:</strong> Reads the Description column (e.g. "NETFLIX.COM MONTHLY SUB"), converts text to numbers using TF-IDF, then Logistic Regression classifies it as subscription (1) or not (0). spaCy helps lemmatize (Netflix → netflix). Accuracy: <strong>99.81%</strong>.</div>
+        </div>
+      </div>
+
+      <div class="fr-box">
+        <div class="fr-header" style="background: var(--purple);">FR4 · fr4_pattern_detector.py</div>
+        <div class="fr-body">
+          <strong>Pattern Detection</strong>
+          <span>Finds repeating transactions</span>
+          <div class="simple">Groups transactions by Customer + Merchant. If a debit appeared 3 or more times, it's flagged as a recurring pattern. Detects whether it's Monthly (~30 days gap) or Weekly (~7 days). Found <strong>74,582 confirmed patterns</strong>.</div>
+        </div>
+      </div>
+
+      <div class="fr-box">
+        <div class="fr-header" style="background: var(--mint); color: var(--navy);">FR5 · fr5_prediction_engine.py</div>
+        <div class="fr-body">
+          <strong>Debit Prediction</strong>
+          <span>When will next payment be?</span>
+          <div class="simple"><strong>Date:</strong> Linear Regression on past dates (70%) blended with median gap (30%). <strong>Amount:</strong> ARIMA(1,0,0) — AR(1) means "use the previous value to predict the next." We use order (1,0,0) because subscription amounts are stable (stationary). 3,067 of 3,068 predictions used ARIMA.</div>
+        </div>
+      </div>
+
+      <div class="fr-box">
+        <div class="fr-header" style="background: var(--amber);">FR6 · fr6_risk_scoring.py</div>
+        <div class="fr-body">
+          <strong>Risk Scoring</strong>
+          <span>Will the payment fail?</span>
+          <div class="simple"><strong>Gradient Boosting</strong> uses 8 features (balance, fail rate, upcoming amount…) to output a score 0–1. Score ≥ 0.65 → High Risk, 0.35–0.65 → Medium, below 0.35 → Low. We fixed a "score collapse bug" by using 95th-percentile normalisation instead of fixed thresholds.</div>
+        </div>
+      </div>
+
+      <div class="fr-box">
+        <div class="fr-header" style="background: var(--red);">FR7 · fr7_genai_alerts.py</div>
+        <div class="fr-body">
+          <strong>GenAI Alert Generator</strong>
+          <span>Smart messages for users</span>
+          <div class="simple">Generates structured alert messages like: "Upcoming Debit: Netflix ₹649 | Risk: High | Suggestion: Top up ₹300 before 2 days." Uses Phi-2 style structured templates. Generated <strong>1,200 alerts</strong> (one per customer).</div>
+        </div>
+      </div>
+
+      <div class="fr-box">
+        <div class="fr-header" style="background: var(--blue);">FR8 · fr8_insights.py</div>
+        <div class="fr-body">
+          <strong>Insights Generation</strong>
+          <span>Summary for each customer</span>
+          <div class="simple">Generates a plain English insight: "You have 2 active subscriptions. Total monthly spend: ₹4,286. Next debit: 2024-07-07." Simple aggregation + text template filling.</div>
+        </div>
+      </div>
+
+      <div class="fr-box">
+        <div class="fr-header" style="background: var(--navy);">FR9 · dashboard.py</div>
+        <div class="fr-body">
+          <strong>Streamlit Dashboard</strong>
+          <span>The visual web interface</span>
+          <div class="simple">A web app that runs with <code>streamlit run dashboard.py</code>. Has login, sidebar navigation, 6 tabs: Active Subscriptions, Upcoming Debits, Risk Alerts, Monthly Spend chart, GenAI Alerts, Add New Customer.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="card card-accent">
+      <h3>🔗 How the files connect</h3>
+      <div class="code-block">
+<span class="comment"># Each FR reads the previous FR's output file</span>
+FR1 → transactions_raw.csv
+FR2 → transactions_cleaned.csv
+FR3 → transactions_nlp.csv (+ saves nlp_model.pkl)
+FR4 → transactions_patterns.csv + recurring_summary.csv
+FR5 → predictions.csv (+ saves prediction_model.pkl)
+FR6 → risk_scored.csv (+ saves risk_model.pkl)
+FR7 → alerts.txt
+FR8 → customer_insights.csv
+FR9 → reads ALL files → shows in dashboard
+      </div>
+    </div>
+
+    <div class="highlight">
+      <strong>🧠 Key concept to remember:</strong> This is a <strong>pipeline</strong> — data flows through each module one by one, each building on the previous. Like an assembly line in a factory.
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- ═══════════════════════════════════════════════════════
+       SECTION 3 — DASHBOARD
+  ═══════════════════════════════════════════════════════ -->
+  <div class="section" id="dashboard">
+    <div class="section-header">
+      <div class="section-num">03</div>
+      <div>
+        <div class="section-title">Dashboard — FR9 Explained</div>
+        <div class="section-sub">What each section shows and why it's there</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>🔐 Login Page</h3>
+      <p><strong>What it is:</strong> A simple username + password screen. Credentials: <code>banker01/pass123</code>, <code>admin/admin123</code>.</p>
+      <p><strong>Why it's there:</strong> Bank dashboards need authentication — only authorised employees should see customer financial data. We use Streamlit's <code>st.session_state</code> to track if the user is logged in.</p>
+      <p><strong>Simple explanation:</strong> "It's just like logging into a website. If you're not logged in, you can't see the data."</p>
+    </div>
+
+    <div class="card">
+      <h3>📋 Tab 1 — Active Subscriptions</h3>
+      <p><strong>What it shows:</strong> A filterable table of all detected subscriptions — Merchant name, frequency (monthly/weekly), amount, last debit date, next predicted date.</p>
+      <p><strong>Data source:</strong> <code>predictions.csv</code> + <code>transactions_nlp.csv</code></p>
+      <p><strong>Simple explanation:</strong> "Shows you every subscription that's active, like a list of all your recurring payments, so you know exactly what's going on."</p>
+    </div>
+
+    <div class="card">
+      <h3>📅 Tab 2 — Upcoming Debits</h3>
+      <p><strong>What it shows:</strong> The next predicted debit for each subscription — sorted by urgency (nearest date first). Shows predicted amount and days remaining.</p>
+      <p><strong>Data source:</strong> <code>predictions.csv</code> (FR5 output)</p>
+      <p><strong>Simple explanation:</strong> "Like a calendar reminder — 'Netflix will charge you ₹649 in 5 days.'"</p>
+    </div>
+
+    <div class="card">
+      <h3>🚨 Tab 3 — Risk Alerts</h3>
+      <p><strong>What it shows:</strong> Cards for each customer, colour-coded: 🔴 High (259 customers), 🟡 Medium (595), 🟢 Low (346). Each card shows risk score, reason, and suggestion.</p>
+      <p><strong>Data source:</strong> <code>risk_scored.csv</code> (FR6 output)</p>
+      <p><strong>Simple explanation:</strong> "A red card means this customer's balance might be too low for the upcoming debit. The bank can proactively warn them."</p>
+    </div>
+
+    <div class="card">
+      <h3>📊 Tab 4 — Monthly Spend Chart</h3>
+      <p><strong>What it shows:</strong> A Plotly bar chart showing total subscription spend per month per customer. Can be filtered by customer ID.</p>
+      <p><strong>Data source:</strong> <code>transactions_raw.csv</code> grouped by month</p>
+      <p><strong>Simple explanation:</strong> "Shows how much a customer spends on subscriptions every month — helps them understand their financial habits."</p>
+    </div>
+
+    <div class="card">
+      <h3>🤖 Tab 5 — GenAI Alerts</h3>
+      <p><strong>What it shows:</strong> The 1,200 structured alerts from FR7. Each alert has: upcoming merchant + amount, risk level, balance shortfall, and actionable suggestion.</p>
+      <p><strong>Data source:</strong> <code>alerts.txt</code> (FR7 output)</p>
+      <p><strong>Simple explanation:</strong> "These are the AI-written messages that could be sent to customers via SMS or app notification."</p>
+    </div>
+
+    <div class="card">
+      <h3>➕ Tab 6 — Add New Customer</h3>
+      <p><strong>What it shows:</strong> A form where you can manually enter transaction data for a new customer and run the full pipeline inline — NLP detection → pattern check → risk score → alert — all in real-time.</p>
+      <p><strong>Why it's special:</strong> This shows the system works end-to-end even for new data, not just pre-processed files.</p>
+      <p><strong>Simple explanation:</strong> "You can add a brand new customer's data and the AI immediately analyses it and gives you a risk score and alert — live."</p>
+    </div>
+
+    <div class="highlight">
+      <strong>📌 How to run the dashboard:</strong> Open terminal in the project folder → type <code>streamlit run streamlit_app/dashboard.py</code> → it opens in your browser at <code>localhost:8501</code>. Login with <code>banker01 / pass123</code>.
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- ═══════════════════════════════════════════════════════
+       SECTION 4 — Q&A
+  ═══════════════════════════════════════════════════════ -->
+  <div class="section" id="qa">
+    <div class="section-header">
+      <div class="section-num">04</div>
+      <div>
+        <div class="section-title">Complete Q&A Preparation</div>
+        <div class="section-sub">Click any question to see the answer. Covers all BRD sections, models, code, and design decisions.</div>
+      </div>
+    </div>
+
+    <!-- CATEGORY: Project Overview -->
+    <div class="qa-section">
+      <div class="qa-label">
+        <span class="qa-label-badge" style="background: rgba(13,27,62,0.1); color: var(--navy);">🏦 Project Overview</span>
+      </div>
+
+      <div class="qa-item" onclick="toggle(this)">
+        <div class="qa-q">
+          <div class="qa-q-icon" style="background: var(--navy);">Q</div>
+          <div class="qa-q-text">What is this project about in simple terms?</div>
+          <div class="qa-toggle">▾</div>
+        </div>
+        <div class="qa-a">
+          We built an <strong>AI-powered banking system</strong> that automatically detects subscription transactions in bank statements, predicts when the next auto-debit will happen, scores the risk of payment failure, and generates smart alerts. Think of it as a smart assistant that watches your bank account and warns you before your Netflix payment fails because of low balance.
+        </div>
+      </div>
+
+      <div class="qa-item" onclick="toggle(this)">
+        <div class="qa-q">
+          <div class="qa-q-icon" style="background: var(--navy);">Q</div>
+          <div class="qa-q-text">What problem does this solve?</div>
+          <div class="qa-toggle">▾</div>
+        </div>
+        <div class="qa-a">
+          Four key problems: (1) Users forget active subscriptions — money leaks silently. (2) No advance warning before auto-debit. (3) Auto-debits fail due to insufficient balance, causing penalty charges. (4) Subscription transactions are buried in long transaction histories — hard to find manually. Our system addresses all four automatically using NLP, ML, and GenAI.
+        </div>
+      </div>
+
+      <div class="qa-item" onclick="toggle(this)">
+        <div class="qa-q">
+          <div class="qa-q-icon" style="background: var(--navy);">Q</div>
+          <div class="qa-q-text">Who uses this system?</div>
+          <div class="qa-toggle">▾</div>
+        </div>
+        <div class="qa-a">
+          Two personas from the BRD: (1) <strong>Retail Customer</strong> — uses multiple subscriptions, wants alerts before deductions. (2) <strong>Banking Analyst</strong> — monitors auto-debit success rates, uses the dashboard to identify at-risk customers and improve retention. The Streamlit dashboard is built for bank employees to monitor customer risk.
+        </div>
+      </div>
+
+      <div class="qa-item" onclick="toggle(this)">
+        <div class="qa-q">
+          <div class="qa-q-icon" style="background: var(--navy);">Q</div>
+          <div class="qa-q-text">What are the 9 Functional Requirements (FRs) from the BRD?</div>
+          <div class="qa-toggle">▾</div>
+        </div>
+        <div class="qa-a">
+          <ul>
+            <li><strong>FR1</strong> — Dataset Input: Accept/generate transaction dataset with required fields</li>
+            <li><strong>FR2</strong> — Data Processing: Clean, normalize text, handle missing values</li>
+            <li><strong>FR3</strong> — NLP Subscription Detection: Identify subscription transactions using text classification</li>
+            <li><strong>FR4</strong> — Recurring Pattern Detection: Detect frequency and recurring dates</li>
+            <li><strong>FR5</strong> — Debit Prediction: Predict next debit date and amount</li>
+            <li><strong>FR6</strong> — Risk Prediction: Predict failure risk with score</li>
+            <li><strong>FR7</strong> — GenAI Alert Generator: Generate proactive alerts</li>
+            <li><strong>FR8</strong> — Insights Generation: Summarise subscription behaviour</li>
+            <li><strong>FR9</strong> — Dashboard: Display everything in an interactive UI</li>
+          </ul>
+          All 9 FRs are implemented and verified. ✅
+        </div>
+      </div>
+    </div>
+
+    <!-- CATEGORY: Data -->
+    <div class="qa-section">
+      <div class="qa-label">
+        <span class="qa-label-badge" style="background: rgba(10,126,140,0.1); color: var(--teal);">📊 Data & FR1–FR2</span>
+      </div>
+
+      <div class="qa-item" onclick="toggle(this)">
+        <div class="qa-q">
+          <div class="qa-q-icon" style="background: var(--teal);">Q</div>
+          <div class="qa-q-text">Why did you use synthetic data instead of real bank data?</div>
+          <div class="qa-toggle">▾</div>
+        </div>
+        <div class="qa-a">
+          <strong>Privacy and security reasons.</strong> Real bank transaction data contains sensitive personal and financial information — we cannot legally access or use it for a student project. Synthetic data (generated with Faker) allows us to simulate realistic banking behaviour without violating any privacy regulations. The BRD also explicitly states synthetic data as the approach (Section 12). The data is realistic enough to demonstrate and evaluate the system.
+        </div>
+      </div>
+
+      <div class="qa-item" onclick="toggle(this)">
+        <div class="qa-q">
+          <div class="qa-q-icon" style="background: var(--teal);">Q</div>
+          <div class="qa-q-text">How did you generate the dataset? What is Faker?</div>
+          <div class="qa-toggle">▾</div>
+        </div>
+        <div class="qa-a">
+          <strong>Faker</strong> is a Python library that generates fake but realistic data. We used the <code>en_IN</code> (Indian English) locale to generate Indian-sounding names like "Karan Verma," "Priya Nair." The script creates 1,200 customers, each with: a monthly salary credit, random subscriptions from a catalogue of 19 services (Netflix, Spotify, gym, electricity, etc.), random non-subscription debits (groceries, ATM, UPI), and simulated failed payments. Random noise like occasional null values and small amount variations were added to make it realistic.
+        </div>
+      </div>
+
+      <div class="qa-item" onclick="toggle(this)">
+        <div class="qa-q">
+          <div class="qa-q-icon" style="background: var(--teal);">Q</div>
+          <div class="qa-q-text">How many transactions and what fields does the dataset have?</div>
+          <div class="qa-toggle">▾</div>
+        </div>
+        <div class="qa-a">
+          <strong>137,806 transactions</strong> for 1,200 customers over 18 months (Jan 2023 – Jun 2024). Fields: CustomerID, CustomerName, TransactionID, Date, Description, Amount, Balance, Merchant, TransactionType (CREDIT/DEBIT), SubscriptionFlag (0 or 1), Status (SUCCESS/FAILED), Frequency (monthly/weekly). This matches the BRD's required fields plus additional engineered columns.
+        </div>
+      </div>
+
+      <div class="qa-item" onclick="toggle(this)">
+        <div class="qa-q">
+          <div class="qa-q-icon" style="background: var(--teal);">Q</div>
+          <div class="qa-q-text">What data cleaning was done in FR2?</div>
+          <div class="qa-toggle">▾</div>
+        </div>
+        <div class="qa-a">
+          FR2 performs: (1) <strong>Null handling</strong> — missing Balance values filled with 0 or forward-fill. (2) <strong>Text normalisation</strong> — descriptions converted to lowercase, special characters removed, extra spaces stripped. (3) <strong>Duplicate removal</strong> — identical transaction rows dropped. (4) <strong>Type conversion</strong> — Date column parsed to datetime format. Output is <code>transactions_cleaned.csv</code> which all downstream modules read.
+        </div>
+      </div>
+    </div>
+
+    <!-- CATEGORY: NLP -->
+    <div class="qa-section">
+      <div class="qa-label">
+        <span class="qa-label-badge" style="background: rgba(124,58,237,0.1); color: var(--purple);">🧠 NLP — FR3</span>
+      </div>
+
+      <div class="qa-item" onclick="toggle(this)">
+        <div class="qa-q">
+          <div class="qa-q-icon" style="background: var(--purple);">Q</div>
+          <div class="qa-q-text">What is NLP and how did you use it here?</div>
+          <div class="qa-toggle">▾</div>
+        </div>
+        <div class="qa-a">
+          <strong>NLP = Natural Language Processing</strong> — teaching a computer to understand human text. Here, we use it to read transaction descriptions like "NETFLIX.COM MONTHLY SUB" and classify them as subscription (1) or not (0). The process: (1) Clean text → (2) TF-IDF converts words to numbers → (3) Logistic Regression predicts class → (4) False-positive filter removes salary/refunds. spaCy is used for lemmatization (e.g., "subscriptions" → "subscription") before vectorization.
+        </div>
+      </div>
+
+      <div class="qa-item" onclick="toggle(this)">
+        <div class="qa-q">
+          <div class="qa-q-icon" style="background: var(--purple);">Q</div>
+          <div class="qa-q-text">What is TF-IDF and why did you use it?</div>
+          <div class="qa-toggle">▾</div>
+        </div>
+        <div class="qa-a">
+          <strong>TF-IDF = Term Frequency - Inverse Document Frequency.</strong> It converts text into numbers that a machine learning model can understand. TF = how often a word appears in a transaction. IDF = how rare that word is across all transactions. A word like "subscription" appearing in few rows gets a high IDF score — it's informative. A word like "the" appearing everywhere gets a low score — it's not useful. We used n-grams (1–3 words) so phrases like "MONTHLY SUB" are treated as a single feature. Max features: 8,000. <code>sublinear_tf=True</code> reduces the impact of very frequent words.
+        </div>
+      </div>
+
+      <div class="qa-item" onclick="toggle(this)">
+        <div class="qa-q">
+          <div class="qa-q-icon" style="background: var(--purple);">Q</div>
+          <div class="qa-q-text">Why Logistic Regression for classification?</div>
+          <div class="qa-toggle">▾</div>
+        </div>
+        <div class="qa-a">
+          Logistic Regression is ideal here because: (1) <strong>Binary classification</strong> — we only need yes/no (subscription or not). (2) <strong>Fast and interpretable</strong> — easy to explain which features (words) influence the decision. (3) <strong>Works well with TF-IDF sparse matrices</strong> — the high-dimensional, sparse feature space is handled efficiently. (4) <code>class_weight="balanced"</code> handles the imbalance (not all transactions are subscriptions). Alternative considered: SVM and Neural Networks — but Logistic Regression gave 99.81% accuracy, which exceeds the BRD target of >90%, so there was no need for more complexity.
+        </div>
+      </div>
+
+      <div class="qa-item" onclick="toggle(this)">
+        <div class="qa-q">
+          <div class="qa-q-icon" style="background: var(--purple);">Q</div>
+          <div class="qa-q-text">What is the false-positive filter and why is it important?</div>
+          <div class="qa-toggle">▾</div>
+        </div>
+        <div class="qa-a">
+          A false positive is when the model incorrectly identifies something as a subscription when it isn't. For example, "MONTHLY SALARY CREDIT" contains the word "monthly" — the TF-IDF model might flag it as a subscription. To fix this, we maintain a <strong>block-list of false-positive keywords</strong>: <code>{salary, refund, neft, imps, rtgs, dividend, interest, bonus, deposit}</code>. If any of these words appear in the description, we override the model's prediction to non-subscription, regardless of the model's confidence. This significantly reduced false positives without reducing recall.
+        </div>
+      </div>
+
+      <div class="qa-item" onclick="toggle(this)">
+        <div class="qa-q">
+          <div class="qa-q-icon" style="background: var(--purple);">Q</div>
+          <div class="qa-q-text">How did you achieve 99.81% accuracy?</div>
+          <div class="qa-toggle">▾</div>
+        </div>
+        <div class="qa-a">
+          Several design choices combined: (1) <strong>Clean, structured descriptions</strong> in our synthetic dataset — real-world bank data uses relatively consistent description formats. (2) <strong>Good feature engineering</strong> — 1–3 n-grams capture multi-word patterns like "MONTHLY SUB," "ANNUAL PLAN." (3) <strong>False-positive filter</strong> eliminates clear non-subscriptions. (4) <strong>Balanced class weights</strong> prevent bias toward the majority class. The 99.81% is on test set (20% of data, stratified split). BRD target was >90% — we exceeded it significantly.
+        </div>
+      </div>
+
+      <div class="qa-item" onclick="toggle(this)">
+        <div class="qa-q">
+          <div class="qa-q-icon" style="background: var(--purple);">Q</div>
+          <div class="qa-q-text">What role does spaCy play?</div>
+          <div class="qa-toggle">▾</div>
+        </div>
+        <div class="qa-a">
+          spaCy (<code>en_core_web_sm</code> model) performs <strong>lemmatization</strong> — converting words to their base form. For example: "subscriptions" → "subscription," "billed" → "bill," "renewing" → "renew." This reduces vocabulary size and helps the TF-IDF vectorizer generalize better. spaCy is used as an optional preprocessing step — if it's not installed, the pipeline still runs with basic regex cleaning. It also handles tokenization and stop-word removal.
+        </div>
+      </div>
+    </div>
+
+    <!-- CATEGORY: Patterns & Prediction -->
+    <div class="qa-section">
+      <div class="qa-label">
+        <span class="qa-label-badge" style="background: rgba(2,195,154,0.15); color: #065F46);">📈 Pattern Detection & Prediction — FR4, FR5</span>
+      </div>
+
+      <div class="qa-item" onclick="toggle(this)">
+        <div class="qa-q">
+          <div class="qa-q-icon" style="background: var(--mint); color: var(--navy);">Q</div>
+          <div class="qa-q-text">How does recurring pattern detection work?</div>
+          <div class="qa-toggle">▾</div>
+        </div>
+        <div class="qa-a">
+          FR4 groups the NLP-tagged transactions by <code>CustomerID + Merchant</code>. For each group, it: (1) Counts the occurrences — must be ≥ 3 to be considered recurring. (2) Calculates the average gap between consecutive payments. (3) Classifies frequency: gap ≤ 9 days → Weekly, ≤ 35 days → Monthly, otherwise → Irregular. (4) Outputs the first and last seen dates, average amount, and frequency label. Result: 74,582 confirmed recurring patterns from 75,428 NLP-detected subscriptions.
+        </div>
+      </div>
+
+      <div class="qa-item" onclick="toggle(this)">
+        <div class="qa-q">
+          <div class="qa-q-icon" style="background: var(--mint); color: var(--navy);">Q</div>
+          <div class="qa-q-text">What is ARIMA and why did you choose it for amount prediction?</div>
+          <div class="qa-toggle">▾</div>
+        </div>
+        <div class="qa-a">
+          <strong>ARIMA = AutoRegressive Integrated Moving Average.</strong> It's a time series forecasting model. The three parameters (p,d,q) mean: <strong>p=1</strong> (use 1 previous value to predict the next — AR part), <strong>d=0</strong> (no differencing — data is already stationary), <strong>q=0</strong> (no moving average terms). We chose ARIMA(1,0,0) because subscription amounts are <strong>stationary</strong> — they stay roughly the same month to month (Netflix is always ~₹649). We initially used ARIMA(1,1,1) which applied differencing — this was wrong because it changed stable data unnecessarily and degraded prediction quality. After correcting to (1,0,0), 99.97% of predictions used ARIMA successfully.
+        </div>
+      </div>
+
+      <div class="qa-item" onclick="toggle(this)">
+        <div class="qa-q">
+          <div class="qa-q-icon" style="background: var(--mint); color: var(--navy);">Q</div>
+          <div class="qa-q-text">How do you predict the next debit date?</div>
+          <div class="qa-toggle">▾</div>
+        </div>
+        <div class="qa-a">
+          We use a <strong>blend of two methods</strong>: (1) <strong>Linear Regression (70%)</strong> — fits a line through historical debit dates (converted to ordinal numbers) and extrapolates the next date. (2) <strong>Median Gap (30%)</strong> — takes the median of all historical gaps between consecutive debits (e.g., consistently 30 days). The final predicted date = 0.7 × LR prediction + 0.3 × last_date + median_gap. The blending makes predictions more robust — LR captures trend while median gap handles regularity.
+        </div>
+      </div>
+
+      <div class="qa-item" onclick="toggle(this)">
+        <div class="qa-q">
+          <div class="qa-q-icon" style="background: var(--mint); color: var(--navy);">Q</div>
+          <div class="qa-q-text">Why not use Prophet or a Neural Network for prediction?</div>
+          <div class="qa-toggle">▾</div>
+        </div>
+        <div class="qa-a">
+          <strong>Prophet</strong> (by Facebook) is powerful but overkill for subscription data — it's designed for complex seasonal patterns with hundreds of data points. Our subscription data has very regular, short time series (only 10–15 data points per subscription). <strong>Neural networks</strong> need large amounts of data to train effectively — with only ~15 data points per subscription, they would overfit. <strong>ARIMA(1,0,0)</strong> is perfect here — simple, fast, interpretable, and works well with short stationary series. The BRD mentions "Time Series" and "Regression" which we both implemented.
+        </div>
+      </div>
+    </div>
+
+    <!-- CATEGORY: Risk Scoring -->
+    <div class="qa-section">
+      <div class="qa-label">
+        <span class="qa-label-badge" style="background: rgba(217,119,6,0.1); color: var(--amber);">⚠️ Risk Scoring — FR6</span>
+      </div>
+
+      <div class="qa-item" onclick="toggle(this)">
+        <div class="qa-q">
+          <div class="qa-q-icon" style="background: var(--amber);">Q</div>
+          <div class="qa-q-text">What is Gradient Boosting and why did you use it for risk scoring?</div>
+          <div class="qa-toggle">▾</div>
+        </div>
+        <div class="qa-a">
+          <strong>Gradient Boosting</strong> is an ensemble ML algorithm — it builds many decision trees sequentially, each one learning from the mistakes of the previous. It's excellent for tabular data (like our feature table) because it handles non-linear relationships, doesn't need feature scaling, and is robust to outliers. We chose it over Logistic Regression (which we used for NLP) because risk scoring involves more complex interactions — for example, a customer with low balance AND high upcoming debit is much more risky than either factor alone. Gradient Boosting captures these interactions naturally.
+        </div>
+      </div>
+
+      <div class="qa-item" onclick="toggle(this)">
+        <div class="qa-q">
+          <div class="qa-q-icon" style="background: var(--amber);">Q</div>
+          <div class="qa-q-text">What features did you use for risk scoring?</div>
+          <div class="qa-toggle">▾</div>
+        </div>
+        <div class="qa-a">
+          8 features: (1) <code>Current_Balance</code> — how much money the customer has. (2) <code>Failed_Debit_Rate</code> — % of past debits that failed. (3) <code>Avg_Debit_Amount</code> — average past debit size. (4) <code>Upcoming_Total_Debit</code> — total amount predicted to be debited soon. (5) <code>Balance_To_Debit_Ratio</code> — balance / upcoming debit. (6) <code>Upcoming_Debit_Pct</code> — upcoming debit as % of balance. (7) <code>Total_Monthly_Sub_Amount</code> — total monthly subscription burden. (8) <code>Subscription_Count</code> — number of active subscriptions.
+        </div>
+      </div>
+
+      <div class="qa-item" onclick="toggle(this)">
+        <div class="qa-q">
+          <div class="qa-q-icon" style="background: var(--amber);">Q</div>
+          <div class="qa-q-text">What was the risk score collapse bug and how did you fix it?</div>
+          <div class="qa-toggle">▾</div>
+        </div>
+        <div class="qa-a">
+          <strong>The bug:</strong> Gradient Boosting's <code>predict_proba()</code> was outputting near-certain values — almost all scores were either 0.001 or 0.999. This meant most customers were classified as either Low (346) or High (259), with very few Medium — the distribution was bimodal and unrealistic.<br><br>
+          <strong>Root cause:</strong> The original composite score formula used hard-coded absolute thresholds (e.g., "if balance &lt; ₹5000, score += 0.5"). These thresholds didn't scale across customers with very different income levels.<br><br>
+          <strong>Fix:</strong> Replaced fixed thresholds with <strong>95th-percentile dataset-relative normalisation</strong>. For each feature, we compute the 95th percentile of that feature across all customers, then normalise: <code>score = value / p95_value</code>, clipped to [0,1]. This makes risk scores relative to the dataset population, not absolute values. Result: a realistic distribution — 595 Medium, 346 Low, 259 High.
+        </div>
+      </div>
+
+      <div class="qa-item" onclick="toggle(this)">
+        <div class="qa-q">
+          <div class="qa-q-icon" style="background: var(--amber);">Q</div>
+          <div class="qa-q-text">How are risk levels determined?</div>
+          <div class="qa-toggle">▾</div>
+        </div>
+        <div class="qa-a">
+          The composite risk score (0–1) is calculated as a weighted sum of normalised features: <strong>35% failed debit rate + 30% subscription count + 20% upcoming debit amount + 15% subscription burden</strong>. Then: Score ≥ 0.65 → <strong>High Risk</strong> (259 customers), Score 0.35–0.65 → <strong>Medium Risk</strong> (595 customers), Score &lt; 0.35 → <strong>Low Risk</strong> (346 customers). The weights reflect business priority — a history of failed debits is the strongest indicator of future failure.
+        </div>
+      </div>
+    </div>
+
+    <!-- CATEGORY: GenAI & Insights -->
+    <div class="qa-section">
+      <div class="qa-label">
+        <span class="qa-label-badge" style="background: rgba(220,38,38,0.1); color: var(--red);">🤖 GenAI & Insights — FR7, FR8</span>
+      </div>
+
+      <div class="qa-item" onclick="toggle(this)">
+        <div class="qa-q">
+          <div class="qa-q-icon" style="background: var(--red);">Q</div>
+          <div class="qa-q-text">What is GenAI and how did you implement it?</div>
+          <div class="qa-toggle">▾</div>
+        </div>
+        <div class="qa-a">
+          <strong>GenAI = Generative Artificial Intelligence</strong> — AI that generates new content (text, images, etc.). For our system, the GenAI component (FR7) generates personalised alert messages. The BRD specifies Microsoft Phi-2 or Ollama as options. We implemented a <strong>structured template-based approach (Phi-2 style)</strong> because: (1) Phi-2 requires significant GPU memory, which may not be available in all environments. (2) The structured approach produces consistent, reliable alerts without hallucination risk. (3) The BRD allows "rule-based fallback." Each alert contains: merchant name, amount, risk level, timing, balance shortfall, and a specific actionable suggestion.
+        </div>
+      </div>
+
+      <div class="qa-item" onclick="toggle(this)">
+        <div class="qa-q">
+          <div class="qa-q-icon" style="background: var(--red);">Q</div>
+          <div class="qa-q-text">What does a typical alert look like?</div>
+          <div class="qa-toggle">▾</div>
+        </div>
+        <div class="qa-a">
+          <div class="code-block">CUSTOMER: CUST100592
+[FR7] ALERT
+  Upcoming Debit: Amazon ₹499 | Risk: Medium
+  Suggestion: Maintain ₹548 before 2024-07-07.
+
+[FR6] RISK ASSESSMENT
+  Score: 0.533 | Level: Medium
+  Reason: Upcoming debit ₹4,270 is high; Monthly
+  sub burden ₹77,162 (6.8% of balance)
+  Balance: ₹1,126,975 | Upcoming: ₹4,269
+
+[FR8] INSIGHT
+  2 active subscriptions | Monthly spend: ₹4,286</div>
+        </div>
+      </div>
+
+      <div class="qa-item" onclick="toggle(this)">
+        <div class="qa-q">
+          <div class="qa-q-icon" style="background: var(--red);">Q</div>
+          <div class="qa-q-text">What does FR8 do?</div>
+          <div class="qa-toggle">▾</div>
+        </div>
+        <div class="qa-a">
+          FR8 (Insights Generation) aggregates per-customer data and generates a plain English summary: "You have 2 active subscription(s). Total monthly spend: ₹4,286.77. Next debit: 2024-07-07." It reads from <code>predictions.csv</code>, <code>risk_scored.csv</code>, and calculates: number of active subscriptions (monthly vs weekly), total monthly spend, upcoming debit total and date, current balance, and risk level. Output is <code>customer_insights.csv</code> — each row has a <code>FR8_Message</code> column with the human-readable insight.
+        </div>
+      </div>
+    </div>
+
+    <!-- CATEGORY: Dashboard -->
+    <div class="qa-section">
+      <div class="qa-label">
+        <span class="qa-label-badge" style="background: rgba(8,145,178,0.1); color: var(--blue);">🖥️ Dashboard — FR9</span>
+      </div>
+
+      <div class="qa-item" onclick="toggle(this)">
+        <div class="qa-q">
+          <div class="qa-q-icon" style="background: var(--blue);">Q</div>
+          <div class="qa-q-text">Why Streamlit? Why not Flask or Django?</div>
+          <div class="qa-toggle">▾</div>
+        </div>
+        <div class="qa-a">
+          <strong>Streamlit</strong> is ideal for ML/data science dashboards because: (1) <strong>No frontend knowledge needed</strong> — pure Python, no HTML/CSS/JS required. (2) <strong>Rapid development</strong> — a working dashboard in hours, not days. (3) <strong>Built-in chart support</strong> — direct integration with Plotly, Matplotlib. (4) <strong>Reactive by default</strong> — UI automatically re-renders when user interacts. Flask/Django would require separate frontend development (React or vanilla JS), which is beyond the project scope. The BRD specifies Streamlit specifically.
+        </div>
+      </div>
+
+      <div class="qa-item" onclick="toggle(this)">
+        <div class="qa-q">
+          <div class="qa-q-icon" style="background: var(--blue);">Q</div>
+          <div class="qa-q-text">Why Plotly instead of Matplotlib for charts?</div>
+          <div class="qa-toggle">▾</div>
+        </div>
+        <div class="qa-a">
+          <strong>Plotly</strong> produces <strong>interactive</strong> charts — users can hover to see values, zoom in, filter, and download the chart as PNG. Matplotlib produces static images. For a banking dashboard where the user needs to explore data (hover over a bar to see exact spend), interactive charts provide much better UX. Plotly also renders natively in Streamlit with <code>st.plotly_chart()</code>.
+        </div>
+      </div>
+
+      <div class="qa-item" onclick="toggle(this)">
+        <div class="qa-q">
+          <div class="qa-q-icon" style="background: var(--blue);">Q</div>
+          <div class="qa-q-text">How does the login work?</div>
+          <div class="qa-toggle">▾</div>
+        </div>
+        <div class="qa-a">
+          Streamlit's <code>st.session_state</code> is a dictionary that persists across reruns of the script. We store <code>st.session_state["logged_in"] = True</code> after successful login. On each page load, the script checks this flag — if False, show login form; if True, show the dashboard. Credentials are stored in a Python dictionary in the code: <code>USERS = {"banker01": "pass123", "admin": "admin123"}</code>. In production, this would connect to a secure authentication service.
+        </div>
+      </div>
+
+      <div class="qa-item" onclick="toggle(this)">
+        <div class="qa-q">
+          <div class="qa-q-icon" style="background: var(--blue);">Q</div>
+          <div class="qa-q-text">What was the dashboard issue you fixed?</div>
+          <div class="qa-toggle">▾</div>
+        </div>
+        <div class="qa-a">
+          Two issues fixed: (1) <strong>Deprecation warning</strong> — newer versions of Streamlit deprecated <code>use_container_width=True</code> parameter. We migrated to <code>st.container(border=True)</code> for card-style containers and removed the parameter from places that triggered the warning. (2) <strong>Code bloat</strong> — the original dashboard was ~1,800 lines because the old version's code was kept as comments at the bottom. We removed all dead code, reducing the file to ~370 lines without changing any functionality. This makes the code much easier to read, explain, and maintain.
+        </div>
+      </div>
+    </div>
+
+    <!-- CATEGORY: Technical Deep -->
+    <div class="qa-section">
+      <div class="qa-label">
+        <span class="qa-label-badge" style="background: rgba(13,27,62,0.1); color: var(--navy);">🔬 Technical Deep Dives</span>
+      </div>
+
+      <div class="qa-item" onclick="toggle(this)">
+        <div class="qa-q">
+          <div class="qa-q-icon" style="background: var(--navy);">Q</div>
+          <div class="qa-q-text">What is a machine learning pipeline and how does yours work?</div>
+          <div class="qa-toggle">▾</div>
+        </div>
+        <div class="qa-a">
+          A <strong>pipeline</strong> is a sequence of processing steps where each step's output becomes the next step's input. Our pipeline has 9 steps (FR1–FR9). Data flows as CSV files between modules — each module reads the previous module's output file and writes its own. Trained models are saved as <code>.pkl</code> files using <code>joblib</code> so they don't need to be retrained every time the dashboard is used. The pipeline is orchestrated by <code>run_pipeline.py</code> which calls each module in sequence. Total runtime: 126 seconds for 137,806 transactions.
+        </div>
+      </div>
+
+      <div class="qa-item" onclick="toggle(this)">
+        <div class="qa-q">
+          <div class="qa-q-icon" style="background: var(--navy);">Q</div>
+          <div class="qa-q-text">What does joblib do and why do you save .pkl files?</div>
+          <div class="qa-toggle">▾</div>
+        </div>
+        <div class="qa-a">
+          <strong>joblib</strong> serialises (saves) Python objects to disk in binary format. We save the trained models (<code>nlp_model.pkl</code>, <code>risk_model.pkl</code>, etc.) so that the dashboard can load them instantly without retraining. Training takes 2–5 minutes; inference (using a saved model) takes milliseconds. The dashboard's "Add New Customer" tab loads <code>subscription_model.pkl</code> to classify new transactions in real-time — this is only possible because we saved the trained model. The <code>.pkl</code> format = Python pickling = serialised binary representation of the object.
+        </div>
+      </div>
+
+      <div class="qa-item" onclick="toggle(this)">
+        <div class="qa-q">
+          <div class="qa-q-icon" style="background: var(--navy);">Q</div>
+          <div class="qa-q-text">Why did you use a sklearn Pipeline for NLP?</div>
+          <div class="qa-toggle">▾</div>
+        </div>
+        <div class="qa-a">
+          Scikit-learn's <code>Pipeline</code> chains preprocessing steps with the final model into a single object: <code>Pipeline([("tfidf", TfidfVectorizer(...)), ("clf", LogisticRegression(...))])</code>. Benefits: (1) <strong>No data leakage</strong> — TF-IDF is fit only on training data, not test data. (2) <strong>Single object to save</strong> — <code>joblib.dump(pipeline, "nlp_model.pkl")</code> saves both the vectorizer AND the classifier together. (3) <strong>Simple inference</strong> — <code>pipeline.predict(new_text)</code> automatically vectorizes then classifies. Without Pipeline, you'd have to save two separate objects and remember to apply them in order.
+        </div>
+      </div>
+
+      <div class="qa-item" onclick="toggle(this)">
+        <div class="qa-q">
+          <div class="qa-q-icon" style="background: var(--navy);">Q</div>
+          <div class="qa-q-text">How would this work with real bank data?</div>
+          <div class="qa-toggle">▾</div>
+        </div>
+        <div class="qa-a">
+          With real data, we would: (1) Connect to a banking API (Plaid, RazorpayX, or internal bank API) instead of generating synthetic data. (2) Replace FR1's Faker generator with an API data ingestion module. (3) Keep FR2–FR9 mostly unchanged — the pipeline is data-agnostic. (4) Add data encryption for PII (personally identifiable information). (5) Deploy on a cloud server (AWS/GCP) instead of running locally. (6) Add real authentication (OAuth2, bank's SSO). The BRD explicitly marks real-time bank integration as "Out of Scope" for this project.
+        </div>
+      </div>
+
+      <div class="qa-item" onclick="toggle(this)">
+        <div class="qa-q">
+          <div class="qa-q-icon" style="background: var(--navy);">Q</div>
+          <div class="qa-q-text">What are the non-functional requirements and how did you meet them?</div>
+          <div class="qa-toggle">▾</div>
+        </div>
+        <div class="qa-a">
+          From BRD Section 10: (1) <strong>Performance &lt;10 sec processing</strong> — dashboard loads data using <code>@st.cache_data</code> so after first load, all subsequent loads are instant. Pipeline itself takes 126 seconds for full 137K dataset, but individual customer queries are &lt;1 sec. (2) <strong>Local Execution Required</strong> — entire system runs with <code>python run_pipeline.py</code> and <code>streamlit run dashboard.py</code>. No cloud services or internet required (except initial package install). (3) <strong>Simple UI</strong> — sidebar navigation, clear tabs, colour-coded risk cards. (4) <strong>High Accuracy</strong> — NLP 99.81% vs target 90%.
+        </div>
+      </div>
+    </div>
+
+    <!-- CATEGORY: Challenges -->
+    <div class="qa-section">
+      <div class="qa-label">
+        <span class="qa-label-badge" style="background: rgba(220,38,38,0.1); color: var(--red);">🔧 Challenges & Decisions</span>
+      </div>
+
+      <div class="qa-item" onclick="toggle(this)">
+        <div class="qa-q">
+          <div class="qa-q-icon" style="background: var(--red);">Q</div>
+          <div class="qa-q-text">What was the hardest challenge you faced?</div>
+          <div class="qa-toggle">▾</div>
+        </div>
+        <div class="qa-a">
+          The <strong>risk score collapse bug in FR6</strong> was the most technically challenging. The Gradient Boosting model's scores were collapsing to near-0 or near-1 for all customers, giving an unrealistic binary distribution. Debugging required understanding that the issue was in the <em>composite scoring formula</em>, not the ML model itself — fixed thresholds didn't account for different customer income scales. The 95th-percentile normalisation solution was non-obvious and required several iterations to arrive at. The second hardest was the ARIMA order selection — understanding why (1,1,1) was wrong for stationary data required revisiting time series stationarity theory.
+        </div>
+      </div>
+
+      <div class="qa-item" onclick="toggle(this)">
+        <div class="qa-q">
+          <div class="qa-q-icon" style="background: var(--red);">Q</div>
+          <div class="qa-q-text">What would you do differently if you had more time?</div>
+          <div class="qa-toggle">▾</div>
+        </div>
+        <div class="qa-a">
+          (1) <strong>Real LLM integration</strong> — actually call Phi-2 or Llama for richer, more natural alert text instead of template-based. (2) <strong>Real bank API</strong> — connect to Plaid or a sandbox banking API for live data. (3) <strong>Push notifications</strong> — integrate Twilio/MSG91 to send actual SMS alerts. (4) <strong>Anomaly detection</strong> — use Isolation Forest to flag one-time charges that look like subscriptions. (5) <strong>Model evaluation</strong> — add proper cross-validation and metrics dashboard for FR5 (MAE, RMSE for prediction accuracy). (6) <strong>User-facing mobile app</strong> — the dashboard is for bankers; a mobile app for customers would complete the vision.
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end Q&A section -->
+
+  <hr class="section-divider">
+
+  <!-- ═══════════════════════════════════════════════════════
+       SECTION 5 — PPT GUIDE
+  ═══════════════════════════════════════════════════════ -->
+  <div class="section" id="ppt">
+    <div class="section-header">
+      <div class="section-num">05</div>
+      <div>
+        <div class="section-title">How to Present the PPT — Slide by Slide</div>
+        <div class="section-sub">Exact talking points for each of the 13 slides. Who says what, when to pause, what to emphasise.</div>
+      </div>
+    </div>
+
+    <div class="tips-box">
+      <strong>⏱️ Timing guide:</strong> Total 10–12 minutes. Slides 1–2: 1 min. Slides 3–5: 2 min. Slides 6–8: 3 min. Slides 9–10: 2 min. Slides 11–13: 2 min. Alternate speakers every 2–3 slides.
+    </div>
+
+    <div style="display: grid; gap: 10px;">
+
+      <div class="ppt-slide">
+        <div class="ppt-slide-num"><span>SLIDE</span><span>1</span></div>
+        <div class="ppt-slide-body">
+          <h3>Title Slide — SubIntel</h3>
+          <div class="say">Say: <em>"Good [morning/afternoon]. We are Team 7 — Mansi and Samyak. Our project is called SubIntel — an AI-powered Subscription Intelligence System for banking. You can see the three key stats on the right — we processed 137,806 transactions, achieved 99.81% NLP accuracy, and generated 1,200 alerts — all running completely offline on a local machine."</em></div>
+          <div class="tips">💡 Both introduce yourselves. Keep it to 20 seconds. Let the numbers speak.</div>
+        </div>
+      </div>
+
+      <div class="ppt-slide">
+        <div class="ppt-slide-num"><span>SLIDE</span><span>2</span></div>
+        <div class="ppt-slide-body">
+          <h3>Problem Statement</h3>
+          <div class="say">Say: <em>"The problem is simple but costly. People forget active subscriptions. Auto-debits fail when balance is low — and banks charge penalties. There's no warning system. On the right you can see the scale: 75,428 subscription transactions in our dataset, 259 customers at high risk of payment failure, and 1,200 alerts that could have been sent proactively."</em></div>
+          <div class="tips">💡 Point to the pain points on the left, then the numbers on the right. Make it relatable — "imagine forgetting about a gym subscription for 3 months."</div>
+        </div>
+      </div>
+
+      <div class="ppt-slide">
+        <div class="ppt-slide-num"><span>SLIDE</span><span>3</span></div>
+        <div class="ppt-slide-body">
+          <h3>Solution Overview</h3>
+          <div class="say">Say: <em>"Our solution has six components — NLP detection to read transaction descriptions, a pattern engine to find recurring payments, ML prediction for upcoming debit dates and amounts, risk scoring to identify at-risk customers, GenAI alerts with actionable suggestions, and a Streamlit dashboard that brings it all together."</em></div>
+          <div class="tips">💡 Walk through each card left to right, top to bottom. Say the colour matches the component — teal for NLP, red for alerts, etc.</div>
+        </div>
+      </div>
+
+      <div class="ppt-slide">
+        <div class="ppt-slide-num"><span>SLIDE</span><span>4</span></div>
+        <div class="ppt-slide-body">
+          <h3>System Architecture</h3>
+          <div class="say">Say: <em>"This is our data pipeline — 9 modules from FR1 to FR9. Data flows like a conveyor belt: we generate raw transactions, clean them, detect subscriptions with NLP, find patterns, predict the next debit, score the risk, generate alerts, produce insights, and finally display everything on the dashboard. Each step produces an output file — you can see them in the middle row. The bottom bar shows our key results."</em></div>
+          <div class="tips">💡 Use your finger or pointer to trace the flow left to right across the FR boxes. Then point to the bottom KPI bar.</div>
+        </div>
+      </div>
+
+      <div class="ppt-slide">
+        <div class="ppt-slide-num"><span>SLIDE</span><span>5</span></div>
+        <div class="ppt-slide-body">
+          <h3>Technology Stack</h3>
+          <div class="say">Say: <em>"We chose each tool deliberately. Faker for realistic Indian transaction data. spaCy + TF-IDF + Logistic Regression for NLP — giving us 99.81% accuracy. ARIMA(1,0,0) specifically for subscription amounts because they're stationary — they don't drift over time. Gradient Boosting for risk because it handles complex, non-linear relationships between features. And Streamlit + Plotly for an interactive dashboard that any banking analyst can use without technical knowledge."</em></div>
+          <div class="tips">💡 Don't read all 8 rows — hit the 3–4 most interesting ones. ARIMA order and why GBM was chosen are great discussion points.</div>
+        </div>
+      </div>
+
+      <div class="ppt-slide">
+        <div class="ppt-slide-num"><span>SLIDE</span><span>6</span></div>
+        <div class="ppt-slide-body">
+          <h3>Data</h3>
+          <div class="say">Say: <em>"Since real bank data is private, we generated 137,806 synthetic transactions for 1,200 Indian customers using Faker's en_IN locale. The dataset covers 18 months and includes 19 subscription types — from Netflix at ₹649 to weekly gym locker fees at ₹249. The bar chart on the right shows AnytimeFitness and TimesOfIndia as the most frequent merchants because they charge weekly — so they appear more often than monthly services."</em></div>
+          <div class="tips">💡 Mention the en_IN locale detail — it shows thoughtfulness. The "why weekly merchants appear more" insight shows analytical thinking.</div>
+        </div>
+      </div>
+
+      <div class="ppt-slide">
+        <div class="ppt-slide-num"><span>SLIDE</span><span>7</span></div>
+        <div class="ppt-slide-body">
+          <h3>Pipeline Walkthrough</h3>
+          <div class="say">Say: <em>"Let me walk you through what actually happens step by step. Step 1 generates the data. Step 2 cleans it. Step 3 — this is the NLP magic — reads every description and says yes or no, subscription. Step 4 confirms if it's recurring — needs at least 3 occurrences. Step 5 predicts the next payment — we use ARIMA for the amount and blended Linear Regression for the date. Step 6 scores risk. Steps 7 and 8 generate alerts and insights. And FR9 is the dashboard. The whole thing runs in 126 seconds."</em></div>
+          <div class="tips">💡 Both of you can share these steps — one takes FR1–FR4, the other FR5–FR9. Mention the 126-second runtime at the bottom as a strength.</div>
+        </div>
+      </div>
+
+      <div class="ppt-slide">
+        <div class="ppt-slide-num"><span>SLIDE</span><span>8</span></div>
+        <div class="ppt-slide-body">
+          <h3>Model & AI Results ⭐ Most Important Slide</h3>
+          <div class="say">Say: <em>"These are the real numbers from our trained system. NLP accuracy: 99.81% — the BRD target was 90%, we exceeded it. 3,068 subscription predictions made, 99.97% using ARIMA. The risk distribution: 259 High-risk, 595 Medium, 346 Low — a realistic bell-curve distribution, which we achieved by fixing a score collapse bug in our Gradient Boosting model. And 1,200 alerts generated with actual merchant names, amounts, and suggestions — like the example in the bottom right."</em></div>
+          <div class="tips">💡 This is your strongest slide. Slow down here. Point to the 99.81% and say you exceeded the target. Mention the bug fix — it shows real engineering problem-solving.</div>
+        </div>
+      </div>
+
+      <div class="ppt-slide">
+        <div class="ppt-slide-num"><span>SLIDE</span><span>9</span></div>
+        <div class="ppt-slide-body">
+          <h3>Dashboard Demo</h3>
+          <div class="say">Say: <em>"The dashboard has six sections. Login for authentication. Active Subscriptions — a filterable table. Upcoming Debits — sorted by urgency. Risk Alert Cards — colour coded red, yellow, green. Monthly Spend — an interactive Plotly chart. And GenAI Alerts — the AI-generated messages. If you want, we can also do a live demo of the dashboard right now."</em></div>
+          <div class="tips">💡 Offer to switch to a live demo if the evaluator says yes. Have the terminal ready with the dashboard already running. Login with banker01 / pass123.</div>
+        </div>
+      </div>
+
+      <div class="ppt-slide">
+        <div class="ppt-slide-num"><span>SLIDE</span><span>10</span></div>
+        <div class="ppt-slide-body">
+          <h3>Challenges Faced</h3>
+          <div class="say">Say: <em>"We faced 5 real challenges. The biggest was the risk score collapse in FR6 — all scores were clustering at 0 or 1. We diagnosed the root cause as fixed thresholds not scaling across different income levels, and fixed it with 95th-percentile normalisation. We also corrected the ARIMA order from (1,1,1) to (1,0,0) after realising subscription amounts are already stationary. And we reduced the dashboard from 1,800 to 370 lines by removing dead code — making it much more maintainable."</em></div>
+          <div class="tips">💡 This slide shows intellectual honesty and problem-solving ability. Evaluators love this — it proves you understand the system deeply, not just ran it.</div>
+        </div>
+      </div>
+
+      <div class="ppt-slide">
+        <div class="ppt-slide-num"><span>SLIDE</span><span>11</span></div>
+        <div class="ppt-slide-body">
+          <h3>Key Learnings</h3>
+          <div class="say">Say: <em>"This project gave us hands-on experience with a complete ML engineering workflow — from data generation to NLP pipeline design, to time series modeling, to UI development. The most impactful learning was the risk score debugging — it taught us that model output distribution analysis is as important as accuracy metrics. We also learned that production-ready code means readability and maintainability, not just correctness."</em></div>
+          <div class="tips">💡 Be genuine here. Pick 2 learnings that actually resonated with you personally. Authenticity matters more than covering all 6 cards.</div>
+        </div>
+      </div>
+
+      <div class="ppt-slide">
+        <div class="ppt-slide-num"><span>SLIDE</span><span>12</span></div>
+        <div class="ppt-slide-body">
+          <h3>Future Improvements</h3>
+          <div class="say">Say: <em>"If we extend this project, the short-term priorities are a real bank API integration using Plaid or RazorpayX, and SMS/WhatsApp push notifications via Twilio. Mid-term: a proper fine-tuned LLM for richer alerts and a subscription cancellation recommendation engine. Long-term: a multi-bank dashboard that aggregates subscriptions across accounts, and an anomaly detection layer using Isolation Forest."</em></div>
+          <div class="tips">💡 Shows vision. Keep it to 30 seconds — don't dwell here. The evaluator wants to see you've thought about it, not a product roadmap.</div>
+        </div>
+      </div>
+
+      <div class="ppt-slide">
+        <div class="ppt-slide-num"><span>SLIDE</span><span>13</span></div>
+        <div class="ppt-slide-body">
+          <h3>Thank You</h3>
+          <div class="say">Say: <em>"To summarise — SubIntel processes 137,806 transactions with 99.81% NLP accuracy, meets all 9 functional requirements from the BRD, and runs entirely locally in 126 seconds. Thank you. We're happy to take questions or do a live demo."</em></div>
+          <div class="tips">💡 Both smile and say thank you together. Have the dashboard open and ready. Invite questions confidently — you know this system inside out.</div>
+        </div>
+      </div>
+
+    </div><!-- end ppt slides grid -->
+
+    <div class="card card-accent" style="margin-top: 24px;">
+      <h3>🎯 General Presentation Tips</h3>
+      <div style="display: grid; gap: 8px; margin-top: 10px;">
+        <div style="display: flex; gap: 10px; font-size: 0.9rem;"><span style="color: var(--mint); font-weight: 700; flex-shrink: 0;">→</span><span><strong>Don't read the slides</strong> — they're visual support. Talk to the audience, not the screen.</span></div>
+        <div style="display: flex; gap: 10px; font-size: 0.9rem;"><span style="color: var(--mint); font-weight: 700; flex-shrink: 0;">→</span><span><strong>Use "we" not "I"</strong> — you're a team. Both of you contributed. Own it together.</span></div>
+        <div style="display: flex; gap: 10px; font-size: 0.9rem;"><span style="color: var(--mint); font-weight: 700; flex-shrink: 0;">→</span><span><strong>Know your numbers cold</strong> — 137,806 transactions, 99.81% accuracy, 1,200 alerts, 126 seconds. Say them confidently without looking at the slide.</span></div>
+        <div style="display: flex; gap: 10px; font-size: 0.9rem;"><span style="color: var(--mint); font-weight: 700; flex-shrink: 0;">→</span><span><strong>Mention the bug fix</strong> — the risk score collapse story is your strongest demonstration of deep technical understanding.</span></div>
+        <div style="display: flex; gap: 10px; font-size: 0.9rem;"><span style="color: var(--mint); font-weight: 700; flex-shrink: 0;">→</span><span><strong>Live demo > screenshots</strong> — if you can run the dashboard live during the presentation, do it. It's far more impressive than slide 9.</span></div>
+        <div style="display: flex; gap: 10px; font-size: 0.9rem;"><span style="color: var(--mint); font-weight: 700; flex-shrink: 0;">→</span><span><strong>If you don't know, say so</strong> — "That's a great question, we'd handle that in the next iteration by..." is always a strong answer.</span></div>
+        <div style="display: flex; gap: 10px; font-size: 0.9rem;"><span style="color: var(--mint); font-weight: 700; flex-shrink: 0;">→</span><span><strong>Split the work visibly</strong> — assign each person clear slides so evaluators see both contributions. Suggested: Mansi takes slides 1–6, Samyak takes 7–13, or alternate every 2 slides.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- ═══════════════════════════════════════════════════════
+       SECTION 6 — QUICK REFERENCE
+  ═══════════════════════════════════════════════════════ -->
+  <div class="section" id="quickref">
+    <div class="section-header">
+      <div class="section-num">06</div>
+      <div>
+        <div class="section-title">Quick Cheat Sheet</div>
+        <div class="section-sub">Memorise these before you walk in — numbers, one-liners, model explanations</div>
+      </div>
+    </div>
+
+    <div class="card card-accent">
+      <h3>🔢 Numbers to know by heart</h3>
+      <div class="code-block">
+137,806   → Total transactions generated
+1,200     → Customers
+75,428    → Subscriptions found by NLP
+74,582    → Recurring patterns confirmed (FR4)
+3,068     → Debit predictions made (FR5)
+99.81%    → NLP accuracy (target was >90%)
+99.97%    → ARIMA used (3,067 of 3,068)
+259 / 595 / 346 → High / Medium / Low risk
+1,200     → Alerts generated (FR7)
+126 sec   → Full pipeline runtime
+8,000     → TF-IDF max features
+8         → Features in risk model
+9 / 9     → BRD FRs completed
+~370 lines → Dashboard (was ~1,800)
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>🗣️ One-liner explanations</h3>
+      <div style="display: grid; gap: 10px; margin-top: 8px;">
+        <div><span class="badge badge-teal">TF-IDF</span> <span style="font-size: 0.88rem;">"Converts transaction descriptions into numbers that the AI can understand — rare words like 'subscription' get high scores."</span></div>
+        <div><span class="badge badge-purple">ARIMA(1,0,0)</span> <span style="font-size: 0.88rem;">"A time series model that uses the previous payment amount to predict the next one. We use (1,0,0) because subscription amounts don't change much over time."</span></div>
+        <div><span class="badge badge-amber">Gradient Boosting</span> <span style="font-size: 0.88rem;">"An ML model that builds many decision trees and combines them — great for predicting risk from multiple features like balance, failed payments, and subscription count."</span></div>
+        <div><span class="badge badge-teal">spaCy</span> <span style="font-size: 0.88rem;">"Preprocessing tool that converts 'subscriptions' to 'subscription' — reduces vocabulary size and improves NLP accuracy."</span></div>
+        <div><span class="badge badge-green">Streamlit</span> <span style="font-size: 0.88rem;">"A Python library that lets data scientists build web dashboards without knowing HTML or JavaScript."</span></div>
+        <div><span class="badge badge-red">95th percentile normalisation</span> <span style="font-size: 0.88rem;">"Instead of using fixed thresholds, we compare each customer's risk factors relative to the top 5% of customers — makes risk scores meaningful across different income levels."</span></div>
+        <div><span class="badge badge-purple">Pipeline (sklearn)</span> <span style="font-size: 0.88rem;">"Chains TF-IDF and Logistic Regression into one object — prevents data leakage and makes saving/loading the model trivial."</span></div>
+        <div><span class="badge badge-amber">Stationary data</span> <span style="font-size: 0.88rem;">"Data where the mean and variance don't change over time. Netflix is always ~₹649 — that's stationary. So we use ARIMA(1,0,0) with d=0 (no differencing needed)."</span></div>
+      </div>
+    </div>
+
+    <div class="tips-box">
+      <strong>🚀 Before you present, do this:</strong><br>
+      1. Run <code>python run_pipeline.py</code> once to make sure all CSVs and .pkl files are generated.<br>
+      2. Then run <code>streamlit run streamlit_app/dashboard.py</code> and log in with <code>banker01 / pass123</code>.<br>
+      3. Have the dashboard open in your browser on a browser tab — ready for live demo.<br>
+      4. Know which person presents which slides before you walk in.
+    </div>
+
+  </div>
+
+</div><!-- end main -->
+
+<script>
+function toggle(item) {
+  const answer = item.querySelector('.qa-a');
+  const arrow = item.querySelector('.qa-toggle');
+  const isOpen = answer.classList.contains('open');
+  // Close all
+  document.querySelectorAll('.qa-a.open').forEach(a => a.classList.remove('open'));
+  document.querySelectorAll('.qa-toggle.open').forEach(a => a.classList.remove('open'));
+  // Open clicked if it was closed
+  if (!isOpen) {
+    answer.classList.add('open');
+    arrow.classList.add('open');
+    item.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+}
+</script>
+
+</body>
+</html>
